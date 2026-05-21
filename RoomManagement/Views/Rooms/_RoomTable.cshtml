@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RoomManagement.Models.Room>
+
+@{
+    int stt = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã phòng</th>
+            <th>Tên phòng</th>
+            <th>Giá phòng</th>
+            <th>Diện tích</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null && Model.Any())
+        {
+            @foreach (var room in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@room.RoomCode</td>
+                    <td>@room.RoomName</td>
+                    <td>@string.Format("{0:N0}", room.Price) VNĐ</td>
+                    <td>@room.Area m²</td>
+                    <td>
+                        @if (room.Status == "Trống")
+                        {
+                            <span style="color: green;">Còn trống</span>
+                        }
+                        else
+                        {
+                            <span style="color: red;">Đã thuê</span>
+                        }
+                    </td>
+                    <td class="editOrDel">
+                        <a asp-action="Edit" asp-route-id="@room.Id" class="edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <form asp-action="Delete" asp-route-id="@room.Id" method="post"
+                              class="del" id="deleteForm-@room.Id">
+                            <button type="button" onclick="confirmDelete(@room.Id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                    <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                    Không tìm thấy dữ liệu
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

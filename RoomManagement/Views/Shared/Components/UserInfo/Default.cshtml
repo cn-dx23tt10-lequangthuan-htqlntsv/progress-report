@@ -1,0 +1,30 @@
+﻿@model RoomManagement.Models.User
+
+<div class="avt">
+    @if (User.Identity.IsAuthenticated && Model != null)
+    {
+        <span id="navName">@Model.Name</span>
+    }
+    <div>
+        @if (Model != null && !string.IsNullOrEmpty(Model.Image))
+        {
+            <img src="~/uploads/@Model.Image" id="navAvatar" alt="Avatar">
+        }
+        else
+        {
+            <img src="~/imgs/avt.jpg" id="navAvatar" alt="Avatar" style="cursor: pointer;">
+        }
+        <ul>
+            <li>
+                <a asp-controller="Profile" asp-action="Index"><i class="fa-solid fa-circle-info" style="color: blue;"></i> Hồ sơ</a>
+            </li>
+            <li>
+                <form asp-controller="Authenticate" asp-action="Logout" method="post" id="logoutForm">
+                    <button class="btnOut" type="button" onclick="confirmLogout()">
+                        <i class="fa-solid fa-right-from-bracket" style="color: red;"></i> Đăng xuất
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿<nav class="navbar">
+    <div class="index">
+        <i class="fa-solid fa-chevron-left" id="sidebarToggle" style="cursor:pointer; font-size:1.5rem; margin-right:15px;"></i>
+        <a>@ViewData["Title"]</a>
+    </div>
+    @if(User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("UserInfo");
+    }
+</nav>

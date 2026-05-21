@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    bool IsActive(string path)
+    {
+        var currentPath = HttpContextAccessor.HttpContext.Request.Path.Value?.ToLower() ?? "";
+        return currentPath.StartsWith(path.ToLower());
+    }
+}
+
+<div class="sidebar" style="@(User.IsInRole("staff") ? "overflow-y: hidden !important;" : "")">
+    <div class="logo">
+        <a asp-controller="Dashboard" asp-action="Index">
+            <img src="~/imgs/LogoRoomManagement.png" alt="Logo Web" />
+        </a>
+    </div>
+    <div class="menu">
+        <ul>
+            <li class="@(IsActive("/Dashboard") ? "active" : "")">
+                <a asp-controller="Dashboard" asp-action="Index"> <i class="fa-solid fa-gauge"></i> Dashboard</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="@(IsActive("/Rooms") ? "active" : "")">
+                <a asp-controller="Rooms" asp-action="Index"><i class="fa-solid fa-house"></i> Quản lý phòng</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="@(IsActive("/Tenants") ? "active" : "")">
+                <a asp-controller="Tenants" asp-action="Index"><i class="fa-solid fa-user"></i> Quản lý người thuê</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="@(IsActive("/Contracts") ? "active" : "")">
+                <a asp-controller="Contracts" asp-action="Index"><i class="fa-solid fa-file-contract"></i> Quản lý hợp đồng</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="@(IsActive("/Bills") ? "active" : "")">
+                <a asp-controller="Bills" asp-action="Index"><i class="fa-solid fa-file-invoice-dollar"></i> Quản lý hóa đơn</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="@(IsActive("/Payments") ? "active" : "")">
+                <a asp-controller="Payments" asp-action="Index"><i class="fa-solid fa-hand-holding-dollar" style="padding-right: 2px;"></i> Quản lý thanh toán</a>
+            </li>
+        </ul>
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <ul>
+                <li class="@(IsActive("/Services") ? "active" : "")">
+                    <a asp-controller="Services" asp-action="Index"><i class="fa-solid fa-bell-concierge"></i> Quản lý dịch vụ</a>
+                </li>
+            </ul>
+            <ul>
+                <li class="@(IsActive("/Accounts") ? "active" : "")">
+                    <a asp-controller="Accounts" asp-action="Index"><i class="fa-solid fa-users" style="padding-right: 2px;"></i> Quản lý tài khoản</a>
+                </li>
+            </ul>
+        }
+    </div>
+</div>

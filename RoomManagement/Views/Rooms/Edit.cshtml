@@ -1,0 +1,53 @@
+﻿@model RoomManagement.Models.Room
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin phòng";
+    Layout = "_Layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="RoomCode" />
+
+        <h2 style="margin-left: 20%;">Cập nhật thông tin phòng</h2>
+
+        <div>
+            <lable>Mã phòng:</lable>
+            <input type="text" class="AllowNot" asp-for="RoomCode" disabled>
+        </div>
+        <div>
+            <lable>Tên phòng:</lable>
+            <input type="text" asp-for="RoomName" required>
+        </div>
+        <div>
+            <lable>Giá phòng:</lable>
+            <input type="text" asp-for="Price" value="@string.Format("{0:G0}", Model.Price)" required>
+        </div>
+        <div>
+            <lable>Diện tích:</lable>
+            <input type="text" asp-for="Area" required>
+        </div>
+        <div>
+            <lable>Số người tối đa:</lable>
+            <input type="number" asp-for="MaxPeople" min="0" max="10" required>
+        </div>
+        <div class="moTa">
+            <lable>Mô tả:</lable>
+            <textarea asp-for="Description" cols="30" rows="3" placeholder="Mô tả..."></textarea>
+        </div>
+        <div>
+            <lable>Trạng thái:</lable>
+            <select asp-for="Status" class="gioiTinh">
+                <option value="Trống">Trống</option>
+                <option value="Đã thuê">Đã thuê</option>
+            </select>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue">Cập nhật</button>
+        </div>
+    </form>
+</div>

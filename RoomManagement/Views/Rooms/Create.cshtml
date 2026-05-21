@@ -1,0 +1,45 @@
+﻿@model RoomManagement.Models.Room
+
+@{
+    ViewData["Title"] = "Thêm phòng";
+    Layout = "_Layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        <h2>Thêm phòng mới</h2>
+
+        <div>
+            <lable>Tên phòng:</lable>
+            <input type="text" asp-for="RoomName" placeholder="Tên phòng..." required>
+        </div>
+        <div>
+            <lable>Giá phòng:</lable>
+            <input type="text" asp-for="Price" placeholder="Giá phòng..." required>
+        </div>
+        <div>
+            <lable>Diện tích:</lable>
+            <input type="text" asp-for="Area" placeholder="Diện tích..." required>
+        </div>
+        <div>
+            <lable>Số người tối đa:</lable>
+            <input type="number" min="0" max="10" asp-for="MaxPeople" placeholder="Số người..." required>
+        </div>
+        <div class="moTa">
+            <lable>Mô tả:</lable>
+            <textarea asp-for="Description" cols="30" rows="3" placeholder="Mô tả..."></textarea>
+        </div>
+        <div>
+            <lable>Trạng thái:</lable>
+            <select asp-for="Status" class="gioiTinh">
+                <option value="Trống">Trống</option>
+                <option value="Đã thuê">Đã thuê</option>
+            </select>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit">Thêm</button>
+        </div>
+    </form>
+</div>
