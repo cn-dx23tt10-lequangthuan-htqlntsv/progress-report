@@ -1,0 +1,34 @@
+﻿@model IEnumerable<RoomManagement.Models.User>
+
+@{
+    ViewData["title"] = "Quản lý tài khoản";
+    Layout = "_layout";
+    int stt = 1;
+}
+
+<div>
+    <div class="actionBar">
+        <div class="addRoom">
+            <a asp-action="Create"><i class="fa-solid fa-circle-plus"></i> Thêm</a>
+        </div>
+        <div class="searchRoom">
+            <input type="text" name="search" class="ajax-filter" placeholder="Tìm tên, email, số điện thoại...">
+            <button type="button" id="btnFilter"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="fillRoom">
+            <i class="fa-solid fa-filter"></i>
+            <select name="role" class="ajax-filter">
+                <option value="">-- Chọn vai trò --</option>
+                <option value="admin">Quản trị viên</option>
+                <option value="staff">Nhân viên</option>
+            </select>
+        </div>
+    </div>
+    <div class="listRoom" id="table-container">
+        @await Html.PartialAsync("_AccountTable", Model)
+
+        <div class="d-flex justify-content-center mt-3">
+            
+        </div>
+    </div>
+</div>

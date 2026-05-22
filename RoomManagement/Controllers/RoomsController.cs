@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RoomManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class RoomsController : Controller
 {
     private readonly RoomManagementContext _context;
@@ -43,6 +44,7 @@ public class RoomsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Room room)
     {
         if (ModelState.IsValid)
@@ -80,6 +82,7 @@ public class RoomsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(long id, Room room)
     {
         if (id != room.Id)
@@ -98,6 +101,7 @@ public class RoomsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(long id)
     {
         var room = await _context.Rooms

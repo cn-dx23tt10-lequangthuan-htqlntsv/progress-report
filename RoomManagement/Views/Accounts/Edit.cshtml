@@ -1,0 +1,65 @@
+﻿@model RoomManagement.Models.User
+
+@{
+    ViewData["title"] = "Cập nhật thông tin tài khoản";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <h2 style="margin-left: 20%;">Cập nhật thông tin tài khoản</h2>
+
+        <div>
+            <lable>Mã tài khoản:</lable>
+            <input type="text" class="AllowNot" asp-for="Id" value="@Model.Id" disabled>
+        </div>
+        <div>
+            <lable>Tên:</lable>
+            <input type="text" asp-for="Name" value="@Model.Name" placeholder="Tên..." required>
+        </div>
+        <div>
+            <lable>Email:</lable>
+            <input type="email" asp-for="Email" value="@Model.Email" placeholder="Email..." required>
+        </div>
+        <div class="pass">
+            <lable>Mật khẩu củ:</lable>
+            <input type="password" name="OldPassword" id="UOPW" placeholder="Mật khẩu củ...">
+            <i class="fa-solid fa-eye" style="top: 25%;" onclick="showPass('UOPW', this)"></i>
+        </div>
+        <div class="pass">
+            <lable>Mật khẩu:</lable>
+            <input type="password" asp-for="Password" id="UPW" placeholder="Mật khẩu...">
+            <i class="fa-solid fa-eye" style="top: 25%;" onclick="showPass('UPW', this)"></i>
+        </div>
+        <div class="pass">
+            <lable>Xác nhận mật khẩu:</lable>
+            <input type="password" asp-for="ConfirmPassword" id="UCPW" placeholder="Nhập lại mật khẩu...">
+            <i class="fa-solid fa-eye" style="top: 25%;" onclick="showPass('UCPW', this)"></i>
+            <span asp-validation-for="ConfirmPassword" style="color:red"></span>
+        </div>
+        <div>
+            <lable>Số điện thoại:</lable>
+            <input type="text" asp-for="Phone" minlength="10" maxlength="10" value="@Model.Phone" placeholder="Số điện thoại..." required>
+        </div>
+        <div>
+            <lable>Vài trò:</lable>
+            <select asp-for="Role" id="" class="gioiTinh" required>
+                @if (Model.Role == "admin")
+                {
+                    <option value="admin" selected>Quản trị viên</option>
+                    <option value="staff">Nhân viên</option>
+                }
+                else
+                {
+                    <option value="admin">Quản trị viên</option>
+                    <option value="staff" selected>Nhân viên</option>
+                }
+            </select>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue">Cập nhật</button>
+        </div>
+    </form>
+</div>

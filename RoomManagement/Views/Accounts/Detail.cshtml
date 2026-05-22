@@ -1,0 +1,20 @@
+﻿@model RoomManagement.Models.User
+
+@{
+    ViewData["title"] = "Chi tiết thông tin tài khoản";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="container">
+    <div>
+        <h2>Thông tin chi tiết</h2>
+
+        <p><b>Mã tài khoản: </b> @Model.Id</p>
+        <p><b>Tên: </b> @Model.Name</p>
+        <p><b>Email: </b> @Model.Email</p>
+        <p><b>Số điện thoại: </b> @Model.Phone</p>
+        <p><b>Vai trò: </b> @(Model.Role == "admin" ? "Quản trị viên" : "Nhân viên")</p>
+    </div>
+</div>

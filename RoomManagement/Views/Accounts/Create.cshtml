@@ -1,0 +1,48 @@
+﻿@model RoomManagement.Models.User
+
+@{
+    ViewData["title"] = "Thêm tài khoản mới";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        <h2 style="margin-left: 30%;">Thêm tài khoản mới</h2>
+
+        <div>
+            <lable>Tên:</lable>
+            <input type="text" asp-for="Name" placeholder="Tên..." required>
+        </div>
+        <div>
+            <lable>Email:</lable>
+            <input type="email" asp-for="Email" placeholder="Email..." required>
+        </div>
+        <div class="pass">
+            <lable>Mật khẩu:</lable>
+            <input type="password" asp-for="Password" id="CPW" placeholder="Mật khẩu..." required>
+            <i class="fa-solid fa-eye" style="top: 25% !important" onclick="showPass('CPW', this)"></i>
+        </div>
+        <div class="pass">
+            <lable>Xác nhận mật khẩu:</lable>
+            <input type="password" asp-for="ConfirmPassword" id="CCPW" placeholder="Nhập lại mật khẩu..." required>
+            <i class="fa-solid fa-eye" style="top: 25% !important" onclick="showPass('CCPW', this)"></i>
+            <span asp-validation-for="ConfirmPassword" style="color:red"></span>
+        </div>
+        <div>
+            <lable>Số điện thoại:</lable>
+            <input type="text" asp-for="Phone" minlength="10" maxlength="10" placeholder="Số điện thoại..." required>
+        </div>
+        <div>
+            <lable>Vài trò:</lable>
+            <select asp-for="Role" id="" class="gioiTinh" required>
+                <option value="admin">Quản trị viên</option>
+                <option value="staff">Nhân viên</option>
+            </select>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit">Thêm</button>
+        </div>
+    </form>
+</div>

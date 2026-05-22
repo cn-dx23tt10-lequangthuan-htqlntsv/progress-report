@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="~/LogoRoomManagement.ico" />
+    <title>Trang đăng nhập - Room Management</title>
+</head>
+
+<body>
+    <div class="left">
+        <img src="~/imgs/LogoRoomManagement.png" alt="background login">
+    </div>
+    <div class="right">
+        <form asp-controller="Authenticate" asp-action="Login" method="post">
+            <h2>Đăng nhập hệ thống</h2>
+
+            <div>
+                <i class="fa-solid fa-user"></i>
+                <input type="email" name="email" required placeholder="Email...">
+            </div>
+            <div class="pass">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" id="password" required placeholder="Password...">
+                <i class="fa-solid fa-eye" id="togglePass"></i>
+            </div>
+            <div>
+                <button type="submit">Đăng nhập</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("password");
+            const icon = document.getElementById("togglePass");
+
+            icon.addEventListener("click", function () {
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Đăng nhập thất bại!',
+                // Dùng Html.Raw để tránh lỗi định dạng chuỗi trong JS
+                text: '@Html.Raw(TempData["Error"])',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Thử lại'
+            });
+        </script>
+    }
+</body>
+</html>
