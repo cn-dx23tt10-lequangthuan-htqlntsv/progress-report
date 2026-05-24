@@ -1,0 +1,93 @@
+﻿@model RoomManagement.Models.Bill
+@{
+    ViewData["Title"] = "Tạo hóa đơn";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <h2 style="margin-left: 32%;">Tạo hóa đơn mới</h2>
+
+        <div>
+            <label>Phòng:</label>
+            <select asp-for="RoomId" id="selectRoom" class="nguoiThue" required>
+                <option value="">-- Chọn phòng --</option>
+                @if (ViewBag.Rooms != null)
+                {
+                    foreach (var room in (IEnumerable<RoomManagement.Models.Room>)ViewBag.Rooms)
+                    {
+                        <option value="@room.Id">@room.RoomName</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>Người thuê:</label>
+            <select id="selectTenant" class="nguoiThue" required>
+                <option value="">-- Chọn người thuê --</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Tháng:</label>
+            <input type="month" name="monthYear" id="month_input" required>
+        </div>
+
+        <div>
+            <label>Số điện cũ:</label>
+            <input type="number" name="electric_old" id="electric_old" min="0" max="99999" required>
+        </div>
+
+        <div>
+            <label>Số điện mới:</label>
+            <input type="number" name="electric_new" id="electric_new" min="0" max="99999" required>
+        </div>
+
+        <div>
+            <label>Số nước cũ:</label>
+            <input type="number" name="water_old" id="water_old" min="0" max="9999" required>
+        </div>
+
+        <div>
+            <label>Số nước mới:</label>
+            <input type="number" name="water_new" id="water_new" min="0" max="9999" required>
+        </div>
+
+        @foreach(var service in (IEnumerable<RoomManagement.Models.Service>)ViewBag.FixedServices)
+        {
+            <div>
+                <label>Tiền @service.ServiceName?.ToLower():</label>
+                <input type="text" class="fixed-service AllowNot" data-price="@service.Price" value="@(string.Format("{0:N0}", service.Price)) VNĐ" readonly>
+            </div>
+        }
+
+        <div>
+            <label>Tiền phòng:</label>
+            <input type="text" class="AllowNot" id="roomPriceDisplay" readonly>
+            <input type="hidden" asp-for="RoomPrice" id="roomPriceValue">
+        </div>
+
+        <div>
+            <label>Tổng tiền:</label>
+            <input type="text" class="AllowNot" id="totalDisplay" readonly>
+            <input type="hidden" asp-for="Total" id="totalValue">
+        </div>
+
+        <div class="btn-addRoom">
+            <button type="submit">Tạo</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        window.RentalConfig = {
+            electricPrice: @(ViewBag.Electric?.Price ?? 0),
+            waterPrice: @(ViewBag.Water?.Price ?? 0)
+        };
+    </script>
+}

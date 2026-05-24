@@ -1,0 +1,55 @@
+﻿@model RoomManagement.Models.Tenant
+
+@{
+    ViewData["title"] = "Thêm người thuê";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        <h2 style="margin-left: 27%;">Thêm người thuê mới</h2>
+
+        <div>
+            <lable>Tên:</lable>
+            <input type="text" asp-for="Name" placeholder="Tên người thuê..." required>
+        </div>
+        <div>
+            <lable>Số điện thoại:</lable>
+            <input type="text" asp-for="Phone" minlength="10" maxlength="10" placeholder="Số điện thoại..." required>
+        </div>
+        <div>
+            <lable>CCCD:</lable>
+            <input type="text" asp-for="Cccd" minlength="12" maxlength="12" placeholder="Số CCCD..." required>
+        </div>
+        <div>
+            <lable>Ngày sinh:</lable>
+            <input type="date" asp-for="Birthday" required>
+        </div>
+        <div>
+            <lable>Giới tính:</lable>
+            <select asp-for="Gender" id="" class="gioiTinh" required>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        <div>
+            <lable>Phòng:</lable>
+            <select name="room" id="" class="gioiTinh" asp-items="ViewBag.listRoom" required>
+                <option value="">-- Chọn phòng --</option>
+            </select>
+        </div>
+        <div>
+            <lable>Ngày vào:</lable>
+            <input type="date" name="start_day" required>
+        </div>
+        <div class="moTa">
+            <lable>Địa chỉ:</lable>
+            <textarea asp-for="Address" id="" cols="30" rows="3" placeholder="Địa chỉ..." required></textarea>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit">Thêm</button>
+        </div>
+    </form>
+</div>

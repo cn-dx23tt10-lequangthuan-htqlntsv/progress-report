@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RoomManagement.Models.Tenant>
+
+@{
+    ViewData["title"] = "Quản lý người thuê";
+    Layout = "_layout";
+}
+
+<div>
+    <div class="actionBar">
+        <div class="addRoom">
+            <a asp-action="Create"><i class="fa-solid fa-circle-plus"></i> Thêm</a>
+        </div>
+        <div class="searchRoom">
+            <input type="text" name="search" class="ajax-filter" placeholder="Tìm tên, số điện thoại, CCCD...">
+            <button type="button" id="btnFilter"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="fillRoom">
+            <i class="fa-solid fa-filter"></i>
+            <select name="room" class="ajax-filter">
+                <option value="">-- Chọn phòng --</option>
+                @foreach(var room in (IEnumerable<RoomManagement.Models.Room>)ViewBag.Rooms)
+                {
+                    <option value="@room.Id">@room.RoomName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="listRoom" id="table-container">
+        @await Html.PartialAsync("_TenantTable", Model)
+
+        <div class="d-flex justify-content-center mt-3">
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<RoomManagement.Models.Tenant>
+
+@{
+    int stt = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Số điện thoại</th>
+            <th>CCCD</th>
+            <th>Ngày sinh</th>
+            <th>Phòng</th>
+            <th>Ngày vào</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var tenant in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@tenant.Name</td>
+                    <td>@tenant.Phone</td>
+                    <td>@tenant.Cccd</td>
+                    <td>@tenant.Birthday?.ToString("dd/MM/yyyy")</td>
+                    <td>@tenant.Contracts?.FirstOrDefault()?.Room?.RoomName</td>
+                    <td>@tenant.Contracts?.FirstOrDefault()?.StartDay?.ToString("dd/MM/yyyy")</td>
+                    <td class="editOrDel">
+                        <a asp-action="Detail" asp-route-id="@tenant.Id" class="seen"><i class="fa-regular fa-eye"></i></a>
+                        <a asp-action="Edit" asp-route-id="@tenant.Id" class="edit"><i class="fa-solid fa-pen"></i></a>
+                        <form asp-action="Delete" asp-route-id="@tenant.Id" method="post" class="del" id="deleteForm-@tenant.Id">
+                            <button type="button" onclick="confirmDelete(@tenant.Id)"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                    <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                    Không tìm thấy dữ liệu
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

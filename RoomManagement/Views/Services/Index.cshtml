@@ -1,0 +1,25 @@
+﻿@model IEnumerable<RoomManagement.Models.Service>
+
+@{
+    ViewData["title"] = "Quản lý dịch vụ";
+    Layout = "_layout";
+}
+
+<div>
+    <div class="actionBar">
+        <div class="addRoom">
+            <a asp-controller="Services" asp-action="Create"><i class="fa-solid fa-circle-plus"></i> Thêm</a>
+        </div>
+        <div class="searchRoom">
+            <input type="text" name="search" class="ajax-filter" placeholder="Tìm tên dịch vụ...">
+            <button type="button" id="btnFilter"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+    <div class="listRoom" id="table-container">
+        @await Html.PartialAsync("_ServiceTable", Model)
+
+        <div class="d-flex justify-content-center mt-3">
+                
+        </div>
+    </div>
+</div>

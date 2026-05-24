@@ -1,0 +1,55 @@
+﻿@model RoomManagement.Models.Contract
+
+@{
+    ViewData["title"] = "Tạo hợp đồng mới";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        <h2 style="margin-left: 30%;">Tạo hợp đồng mới</h2>
+
+        <div>
+            <lable>Người thuê:</lable>
+            <select asp-for="TenantId" id="" class="nguoiThue" asp-items="ViewBag.tenants" required>
+                <option value="">-- Chọn người thuê --</option>
+            </select>
+        </div>
+        <div>
+            <lable>Phòng:</lable>
+            <select asp-for="RoomId" id="roomSelect" class="nguoiThue" required>
+                <option value="" data-price="0">-- Chọn phòng --</option>
+                @if (ViewBag.Rooms != null)
+                {
+                    foreach (var room in (IEnumerable<RoomManagement.Models.Room>)ViewBag.Rooms)
+                    {
+                        <option value="@room.Id" data-price="@room.Price">
+                            @room.RoomName
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Ngày bắt đầu:</lable>
+            <input type="date" asp-for="StartDay" placeholder="Ngày bắt đầu..." required>
+        </div>
+        <div>
+            <lable>Ngày kết thúc:</lable>
+            <input type="date" asp-for="EndDay">
+        </div>
+        <div>
+            <lable>Tiền cọc:</lable>
+            <input type="number" asp-for="Deposit" placeholder="Tiền cọc..." required>
+        </div>
+        <div>
+            <lable>Giá thuê:</lable>
+            <input type="text" id="price" name="price" readonly placeholder="Giá thuê..." required>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit">Tạo</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,30 @@
+﻿@model RoomManagement.Models.Service
+
+@{
+    ViewData["title"] = "Thêm dịch vụ";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Create" method="post">
+        <h2>Thêm dịch vụ mới</h2>
+
+        <div>
+            <lable>Tên dịch vụ:</lable>
+            <input type="text" asp-for="ServiceName" required>
+        </div>
+        <div>
+            <lable>Đơn giá:</lable>
+            <input type="number" asp-for="Price" required>
+        </div>
+        <div>
+            <lable>Đơn vị:</lable>
+            <input type="text" asp-for="Unit" required>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit">Thêm</button>
+        </div>
+    </form>
+</div>

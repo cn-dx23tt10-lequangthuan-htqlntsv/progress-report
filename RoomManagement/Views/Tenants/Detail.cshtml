@@ -1,0 +1,29 @@
+﻿@model RoomManagement.Models.Tenant
+
+@{
+    ViewData["title"] = "Chi tiết thông tin người thuê";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="container">
+    <div>
+        <h2>Thông tin chi tiết</h2>
+
+        <p><b>Tên: </b> @Model.Name</p>
+        <p><b>Số điện thoại: </b> @Model.Phone</p>
+        <p><b>CCCD: </b> @Model.Cccd</p>
+        <p><b>Phòng: </b> @Model.Contracts?.FirstOrDefault()?.Room?.RoomName</p>
+        <p><b>Hợp đồng: </b> @Model.Contracts?.FirstOrDefault()?.Id</p>
+        <p>
+            <b>Lịch sử thuê:</b>
+            <ul>
+                @foreach (var contract in Model.Contracts)
+                {
+                    <li>@contract.Room?.RoomName</li>
+                }
+            </ul>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<RoomManagement.Models.Bill>
+
+@{
+    int stt = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã hóa đơn</th>
+            <th>Phòng</th>
+            <th>Người thuê</th>
+            <th>Tháng</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var bill in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@bill.Id</td>
+                    <td>@bill.Room?.RoomName</td>
+                    <td>@bill.Room?.Contracts.FirstOrDefault()?.Tenant?.Name</td>
+                    <td>@bill.Month</td>
+                    <td>@string.Format("{0:N0}", @bill.Total) VNĐ</td>
+                    <td>
+                        @if (bill.Status == "Đã thanh toán")
+                        {
+                            <span style="color: green;">Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span style="color: red;">Chưa thanh toán</span>
+                        }
+                    </td>
+                    <td class="editOrDel">
+                        <a asp-action="Detail" asp-route-id="@bill.Id" class="seen"><i class="fa-regular fa-eye"></i></a>
+                        <a asp-action="Edit" asp-route-id="@bill.Id" class="edit"><i class="fa-solid fa-pen"></i></a>
+                        <form asp-action="Delete" asp-route-id="@bill.Id" method="post" class="del" id="deleteForm-@bill.Id">
+                            <button type="button" onclick="confirmDelete(@bill.Id)"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                    <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                    Không tìm thấy dữ liệu
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+﻿@model RoomManagement.Models.Contract
+
+@{
+    ViewData["title"] = "Chi tiết hợp đồng";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="container">
+    <div>
+        <h2>Thông tin chi tiết</h2>
+
+        <p><b>Mã hợp đồng: </b> @Model.Id</p>
+        <p><b>Người thuê: </b> @Model.Tenant?.Name</p>
+        <p><b>Phòng: </b> @Model.Room?.RoomName</p>
+        <p><b>Ngày bắt đầu: </b> @Model.StartDay?.ToString("dd/MM/yyyy")</p>
+        <p><b>Ngày kết thúc: </b> @Model.EndDay?.ToString("dd/MM/yyyy")</p>
+        <p><b>Tiền cọc: </b> @string.Format("{0:N0}", Model.Deposit) VNĐ</p>
+        <p><b>Giá thuê: </b> @string.Format("{0:N0}", Model.Room?.Price) VNĐ</p>
+        <p><b>Trạng thái: </b> @Model.Status</p>
+    </div>
+</div>

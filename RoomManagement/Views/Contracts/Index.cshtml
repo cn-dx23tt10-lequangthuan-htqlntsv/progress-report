@@ -1,0 +1,33 @@
+﻿@model IEnumerable<RoomManagement.Models.Contract>
+
+@{
+    ViewData["title"] = "Quản lý hợp đồng";
+    Layout = "_layout";
+}
+
+<div>
+    <div class="actionBar">
+        <div class="addRoom">
+            <a asp-action="Create"><i class="fa-solid fa-circle-plus"></i> Tạo</a>
+        </div>
+        <div class="searchRoom">
+            <input type="text" name="search" class="ajax-filter" placeholder="Tìm mã hợp đồng, tên người thuê, tên phòng...">
+            <button type="button" id="btnFilter"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="fillRoom">
+            <i class="fa-solid fa-filter"></i>
+            <select name="status" class="ajax-filter">
+                <option value="">-- Chọn trạng thái --</option>
+                <option value="Còn hạn">Còn hạn</option>
+                <option value="Hết hạn">Hết hạn</option>
+            </select>
+        </div>
+    </div>
+    <div class="listRoom" id="table-container">
+        @await Html.PartialAsync("_ContractTable", Model)
+
+        <div class="d-flex justify-content-center mt-3">
+            
+        </div>
+    </div>
+</div>

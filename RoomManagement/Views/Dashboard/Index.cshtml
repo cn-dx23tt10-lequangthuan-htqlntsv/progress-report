@@ -1,0 +1,72 @@
+﻿@model RoomManagement.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="contentDashboard">
+    <h2 style="text-align: center;">Thống kê</h2>
+    <div class="itemList">
+        <div class="item">
+            <b>Tổng số phòng</b>
+            <span>@Model.TotalRooms</span>
+        </div>
+        <div class="item">
+            <b>Tổng số phòng đã thuê</b>
+            <span>@Model.RentedRooms</span>
+        </div>
+        <div class="item">
+            <b>Tổng số phòng trống</b>
+            <span>@Model.EmptyRooms</span>
+        </div>
+        <div class="item">
+            <b>Tổng số người thuê</b>
+            <span>@Model.TotalTenants</span>
+        </div>
+    </div>
+
+    <h2 style="text-align: center;">Danh sách hợp đồng sắp hết hạn</h2>
+    <table class="tableTK">
+        <thead>
+            <tr><th>Hợp đồng</th></tr>
+        </thead>
+        <tbody>
+            @if (!Model.ExpiringContracts.Any())
+            {
+                <tr>
+                    <td colspan="1" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                        <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                        Không có hợp đồng sắp hết hạn
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.ExpiringContracts)
+                {
+                    <tr><td>@item.Id</td></tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+    <h2 style="text-align: center;">Danh sách phòng trống</h2>
+    <table class="tableTK">
+        <thead><tr><th>Phòng</th></tr></thead>
+        <tbody>
+            @if (!Model.AvailableRooms.Any())
+            {
+                <tr><td style="color: red;">Không có phòng trống</td></tr>
+            }
+            else
+            {
+                @foreach (var room in Model.AvailableRooms)
+                {
+                    <tr><td>@room.RoomName</td></tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>

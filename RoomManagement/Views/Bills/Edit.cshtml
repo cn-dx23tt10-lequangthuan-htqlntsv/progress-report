@@ -1,0 +1,85 @@
+﻿@model RoomManagement.Models.Bill
+@{
+    ViewData["Title"] = "Cập nhật hóa đơn";
+    var electricDetail = ViewBag.ElectricDetail as RoomManagement.Models.BillDetail;
+    var waterDetail = ViewBag.WaterDetail as RoomManagement.Models.BillDetail;
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+
+        <h2 style="margin-left: 30%;">Cập nhật hóa đơn</h2>
+
+        <div>
+            <label>Mã hóa đơn:</label>
+            <input type="text" class="AllowNot" asp-for="Id" readonly>
+        </div>
+        <div>
+            <label>Phòng:</label>
+            <input type="text" value="@Model.Room?.RoomName" readonly>
+        </div>
+        <div>
+            <label>Tháng:</label>
+            @{
+                var monthVal = Model.Year + "-" + (Model.Month ?? 0).ToString("D2");
+            }
+            <input type="month" name="monthYear" value="@monthVal" required>
+        </div>
+        <div>
+            <label>Số điện cũ:</label>
+            <input type="text" name="electric_old" id="electric_old"
+                   value="@((electricDetail?.OldIndex ?? 0).ToString().PadLeft(5, '0'))" required>
+        </div>
+        <div>
+            <label>Số điện mới:</label>
+            <input type="text" name="electric_new" id="electric_new"
+                   value="@((electricDetail?.NewIndex ?? 0).ToString().PadLeft(5, '0'))" required>
+        </div>
+        <div>
+            <label>Số nước cũ:</label>
+            <input type="text" name="water_old" id="water_old"
+                   value="@((waterDetail?.OldIndex ?? 0).ToString().PadLeft(4, '0'))" required>
+        </div>
+        <div>
+            <label>Số nước mới:</label>
+            <input type="text" name="water_new" id="water_new"
+                   value="@((waterDetail?.NewIndex ?? 0).ToString().PadLeft(4, '0'))" required>
+        </div>
+
+        @foreach (var service in (IEnumerable<RoomManagement.Models.Service>)ViewBag.FixedServices)
+        {
+            <div>
+                <label>Tiền @service.ServiceName?.ToLower():</label>
+                <input type="text" class="fixed-service AllowNot" data-price="@service.Price" value="@(string.Format("{0:N0}", service.Price)) VNĐ" readonly>
+            </div>
+        }
+
+        <div>
+            <label>Tiền phòng:</label>
+            <input type="hidden" name="room_price" id="roomPriceValue" value="@Model.RoomPrice">
+            <input type="text" class="AllowNot" id="roomPrice"
+                   value="@(String.Format("{0:N0}", Model.RoomPrice)) VNĐ" readonly>
+        </div>
+        <div>
+            <label>Tổng tiền:</label>
+            <input type="text" class="AllowNot" id="totalDisplay"
+                   value="@(String.Format("{0:N0}", Model.Total)) VNĐ" readonly>
+            <input type="hidden" asp-for="Total" id="totalValue">
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue; color: white; border: none; padding: 10px 20px; cursor: pointer;">Cập nhật</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        window.RentalConfig = {
+            electricPrice: @(electricDetail?.Price ?? 0),
+            waterPrice: @(waterDetail?.Price ?? 0)
+        };
+    </script>
+}

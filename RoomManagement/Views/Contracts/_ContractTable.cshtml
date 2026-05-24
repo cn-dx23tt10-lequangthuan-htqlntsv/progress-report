@@ -1,0 +1,62 @@
+﻿@model IEnumerable<RoomManagement.Models.Contract>
+
+@{
+    int stt = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã hợp đồng</th>
+            <th>Người thuê</th>
+            <th>Phòng</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var contract in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@contract.Id</td>
+                    <td>@contract.Tenant?.Name</td>
+                    <td>@contract.Room?.RoomName</td>
+                    <td>@contract.StartDay?.ToString("dd/MM/yyyy")</td>
+                    <td>@contract.EndDay?.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (contract.Status == "Còn hạn")
+                        {
+                            <span style="color: green;">Còn hạn</span>
+                        }
+                        else
+                        {
+                            <span style="color: red;">Hết hạn</span>
+                        }
+                    </td>
+                    <td class="editOrDel">
+                        <a asp-action="Detail" asp-route-id="@contract.Id" class="seen"><i class="fa-regular fa-eye"></i></a>
+                        <a asp-action="Edit" asp-route-id="@contract.Id" class="edit"><i class="fa-solid fa-pen"></i></a>
+                        <form asp-action="Delete" asp-route-id="@contract.Id" method="post" class="del" id="deleteForm-@contract.Id">
+                            <button type="button" onclick="confirmDelete(@contract.Id)"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                    <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                    Không tìm thấy dữ liệu
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

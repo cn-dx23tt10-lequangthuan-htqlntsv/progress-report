@@ -1,0 +1,69 @@
+﻿@model RoomManagement.Models.Tenant
+
+@{
+    ViewData["title"] = "Cập nhật thông tin người thuê";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <h2 style="margin-left: 17%;">Cập nhật thông tin người thuê</h2>
+
+        <div>
+            <lable>Mã người thuê:</lable>
+            <input type="text" asp-for="Id" class="AllowNot" value="@Model.Id" disabled>
+        </div>
+        <div>
+            <lable>Tên:</lable>
+            <input type="text" asp-for="Name" placeholder="Tên người thuê..." value="@Model.Name" required>
+        </div>
+        <div>
+            <lable>Số điện thoại:</lable>
+            <input type="text" asp-for="Phone" minlength="10" maxlength="10" placeholder="Số điện thoại..."
+                value="@Model.Phone" required>
+        </div>
+        <div>
+            <lable>CCCD:</lable>
+            <input type="text" asp-for="Cccd" minlength="12" maxlength="12" placeholder="Số CCCD..."
+                value="@Model.Cccd" required>
+        </div>
+        <div>
+            <lable>Ngày sinh:</lable>
+            <input type="date" asp-for="Birthday" value="@Model.Birthday?.ToString("yyyy-MM-dd")" required>
+        </div>
+        <div>
+            <lable>Giới tính:</lable>
+            <select asp-for="Gender" id="" class="gioiTinh" required>
+                @if (Model.Gender == "Nam")
+                {
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                }
+                else
+                {
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ" selected>Nữ</option>
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Phòng:</lable>
+            <select name="room" id="" class="gioiTinh" asp-items="ViewBag.listRoom" required>
+                <option value="@Model.Contracts?.FirstOrDefault()?.Room?.Id">@Model.Contracts?.FirstOrDefault()?.Room?.RoomName</option>
+            </select>
+        </div>
+        <div>
+            <lable>Ngày vào:</lable>
+            <input type="date" name="start_day" value="@Model.Contracts?.FirstOrDefault()?.StartDay?.ToString("yyyy-MM-dd")" required>
+        </div>
+        <div class="moTa">
+            <lable>Địa chỉ:</lable>
+            <textarea name="address" id="" cols="30" rows="3" placeholder="Địa chỉ..." required>@Model.Address</textarea>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue">Cập nhật</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,86 @@
+﻿@model RoomManagement.Models.Contract
+
+@{
+    ViewData["title"] = "Cập nhật hợp đồng";
+    Layout = "_layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <h2 style="margin-left: 30%;">Cập nhật hợp đồng</h2>
+
+        <div>
+            <lable>Mã hợp đồng:</lable>
+            <input type="text" asp-for="Id" class="AllowNot" id="" value="@Model.Id" disabled>
+        </div>
+        <div>
+            <lable>Người thuê:</lable>
+            <select asp-for="TenantId" id="" class="nguoiThue" required>
+                <option value="">-- Chọn người thuê --</option>
+                @if (ViewBag.Tenants != null)
+                {
+                    foreach (var tenant in (IEnumerable<RoomManagement.Models.Tenant>)ViewBag.Tenants)
+                    {
+                        <option value="@tenant.Id" selected="@(tenant.Id == Model.TenantId ? "selected" : null)">
+                            @tenant.Name
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Phòng:</lable>
+            <select asp-for="RoomId" id="roomSelect" class="nguoiThue" required>
+                <option value="" data-price="0">-- Chọn phòng --</option>
+                <option value="@Model.Room?.Id" data-price="@Model.Room?.Price" selected="selected">
+                    @Model.Room?.RoomName
+                </option>
+                @if (ViewBag.Rooms != null)
+                {
+                    foreach (var room in (IEnumerable<RoomManagement.Models.Room>)ViewBag.Rooms)
+                    {
+                        <option value="@room.Id" data-price="@room.Price" selected="@(room.Id == Model.RoomId ? "selected" : null)">
+                            @room.RoomName
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Ngày bắt đầu:</lable>
+            <input type="date" asp-for="StartDay" placeholder="Ngày bắt đầu..." value="@Model.StartDay?.ToString("yyyy-MM-dd")" required>
+        </div>
+        <div>
+            <lable>Ngày kết thúc:</lable>
+            <input type="date" asp-for="EndDay" value="@Model.EndDay?.ToString("yyyy-MM-dd")">
+        </div>
+        <div>
+            <lable>Tiền cọc:</lable>
+            <input type="text" asp-for="Deposit" placeholder="Tiền cọc..." value="@string.Format("{0:N0}", Model.Deposit)" required>
+        </div>
+        <div>
+            <lable>Giá thuê:</lable>
+            <input type="text" id="price" name="price" readonly placeholder="Giá thuê..." required>
+        </div>
+        <div>
+            <lable>Trạng thái:</lable>
+            <select asp-for="Status" id="" class="trangThai">
+                @if (Model.Status == "Còn hạn")
+                {
+                    <option value="Còn hạn" selected>Còn hạn</option>
+                    <option value="Hết hạn">Hết hạn</option>
+                }
+                else
+                {
+                    <option value="Còn hạn">Còn hạn</option>
+                    <option value="Hết hạn" selected>Hết hạn</option>
+                }
+            </select>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue">Cập nhật</button>
+        </div>
+    </form>
+</div>

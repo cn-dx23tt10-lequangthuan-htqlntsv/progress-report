@@ -1,0 +1,65 @@
+﻿@model RoomManagement.Models.Bill
+
+@{
+    ViewData["Title"] = "Chi tiết thông tin hóa đơn";
+}
+
+<a asp-action="Index" class="returnPage">
+    <i class="fa-solid fa-arrow-left"></i> Quay lại
+</a>
+
+<div class="container">
+    <div>
+        <h2>Thông tin chi tiết</h2>
+
+        <p><b>Mã hóa đơn: </b> @Model.Id</p>
+        <p><b>Phòng: </b> @Model.Room?.RoomName</p>
+        <p><b>Tháng: </b> @Model.Month/@Model.Year</p>
+        <p><b>Tiền phòng: </b> @(Model.RoomPrice?.ToString("N0") ?? "0") VNĐ</p>
+        <p><b>Tổng tiền: </b> @(Model.Total?.ToString("N0") ?? "0") VNĐ</p>
+
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Dịch vụ</th>
+                    <th style="text-align: center;">Chỉ số cũ</th>
+                    <th style="text-align: center;">Chỉ số mới</th>
+                    <th style="text-align: center;">Sử dụng</th>
+                    <th style="text-align: center;">Đơn giá</th>
+                    <th style="text-align: center;">Thành tiền</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.BillDetails != null)
+                {
+                    foreach (var detail in Model.BillDetails)
+                    {
+                        <tr>
+                            <td style="text-align: center;">@detail.Service?.ServiceName</td>
+                            <td style="text-align: center;">
+                                @(detail.OldIndex?.ToString("D5") ?? "00000")
+                            </td>
+                            <td style="text-align: center;">
+                                @(detail.NewIndex?.ToString("D5") ?? "00000")
+                            </td>
+                            <td style="text-align: center;">@detail.Quantity</td>
+                            <td style="text-align: center;">
+                                @(detail.Price?.ToString("N0") ?? "0")
+                            </td>
+                            <td style="text-align: center;">
+                                @(detail.Total?.ToString("N0") ?? "0")
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Không có chi tiết dịch vụ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
