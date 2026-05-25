@@ -1,0 +1,64 @@
+﻿@model IEnumerable<RoomManagement.Models.Payment>
+
+@{
+    int stt = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã thanh toán</th>
+            <th>Mã hóa đơn</th>
+            <th>Tổng cộng</th>
+            <th>PT thanh toán</th>
+            <th>Ngày thanh toán</th>
+            <th>Ghi chú</th>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+            {
+                <th>Hành động</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var payment in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>@payment.Id</td>
+                    <td>@payment.BillId</td>
+                    <td>@string.Format("{0:N0}", payment.Amount) VNĐ</td>
+                    <td>@payment.PaymentMethod</td>
+                    <td>@payment.PaymentDate?.ToString("dd/MM/yyyy")</td>
+                    <td>@payment.Note</td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <td class="editOrDel">
+                            <a asp-action="Edit" asp-route-id="@payment.Id" class="edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+
+                            <form asp-action="Delete" asp-route-id="@payment.Id" method="post"
+                                  class="del" id="deleteForm-@payment.Id">
+                                <button type="button" onclick="confirmDelete(@payment.Id)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="@(User.Identity.IsAuthenticated && User.IsInRole("admin")  ? "8" : "7")" style="padding: 40px !important; color: #94A3B8; background-color: #F8FAFC; text-align: center;">
+                    <i class="fa-solid fa-box-open d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+                    Không tìm thấy dữ liệu
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

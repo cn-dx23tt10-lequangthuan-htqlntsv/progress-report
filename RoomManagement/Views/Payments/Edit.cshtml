@@ -1,0 +1,50 @@
+﻿@model RoomManagement.Models.Payment
+
+@{
+    ViewData["Title"] = "Cập nhật phiếu thanh toán";
+    Layout = "_Layout";
+}
+
+<a asp-action="Index" class="returnPage"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+
+<div class="nhapPhong">
+    <form asp-action="Edit" method="post">
+        <h2 style="margin-left: 20%;">Cập nhật phiếu thanh toán</h2>
+
+        <div>
+            <lable>Mã hóa đơn:</lable>
+            <input type="text" class="AllowNot" asp-for="BillId" placeholder="Mã hóa đơn..." value="@Model.BillId" readonly>
+        </div>
+        <div>
+            <lable>Tổng tiền:</lable>
+            <input type="text" asp-for="Amount" id="amount" placeholder="Tổng tiền..." value="@Model.Amount" required>
+        </div>
+        <div>
+            <lable>PT thanh toán:</lable>
+            <select asp-for="PaymentMethod" id="" class="nguoiThue" required>
+                <option value="">-- Chọn phương thức --</option>
+                @if(Model.PaymentMethod == "Chuyển khoản")
+                {
+                    <option value="Chuyển khoản" selected>Chuyển khoản</option>
+                    <option value="Tiền mặt">Tiền mặt</option>
+                }
+                else
+                {
+                    <option value="Chuyển khoản">Chuyển khoản</option>
+                    <option value="Tiền mặt" selected>Tiền mặt</option>
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Ngày thanh toán:</lable>
+            <input type="date" asp-for="PaymentDate" value="@Model.PaymentDate?.ToString("yyyy-MM-dd")" required>
+        </div>
+        <div class="moTa">
+            <lable>Ghi chú:</lable>
+            <textarea asp-for="Note" cols="30" rows="3" placeholder="Ghi chú...">@Model.Note</textarea>
+        </div>
+        <div class="btn-addRoom">
+            <button type="submit" style="background-color: blue;">Cập nhật</button>
+        </div>
+    </form>
+</div>
